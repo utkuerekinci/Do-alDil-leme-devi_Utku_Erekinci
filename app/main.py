@@ -73,4 +73,8 @@ def index():
     return FileResponse(PUBLIC_DIR / "index.html")
 
 
-app.mount("/assets", StaticFiles(directory=PUBLIC_DIR / "assets"), name="assets")
+app.mount(
+    "/assets",
+    StaticFiles(directory=PUBLIC_DIR / "assets", check_dir=False),
+    name="assets",
+)
