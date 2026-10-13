@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gensim Word2Vec ile Türkçe sözcük ve cümle benzerliklerini keşfedin.">
+  <title>Anlam Atölyesi — Türkçe Word2Vec</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Anlam Atölyesi ana sayfa"><span class="brand-mark">A</span><span>Anlam<br>Atölyesi</span></a>
+    <nav aria-label="Sayfa bölümleri"><a href="#laboratuvar">Laboratuvar</a><a href="#nasil">Nasıl çalışır?</a><a href="/docs">API</a></nav>
+    <div class="status"><span></span> Model hazır</div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow">TÜRKÇE • WORD2VEC • GENSIM</div>
+      <h1>Sözcükler arasındaki<br><em>görünmez bağları</em> keşfet.</h1>
+      <p>Bir yapay zekâ modeli sözcüklerin anlamını nasıl öğrenir? Türkçe bir veri kümesi üzerinde eğitilmiş Word2Vec modeliyle deneyerek gör.</p>
+      <a class="primary-link" href="#laboratuvar">Denemeye başla <span>↘</span></a>
+      <div class="orbit orbit-one"><span>vektör</span></div>
+      <div class="orbit orbit-two"><span>anlam</span></div>
+      <div class="hero-stat"><strong id="vocab-count">—</strong><span>sözcüklük<br>deneysel model</span></div>
+    </section>
+
+    <section class="lab" id="laboratuvar">
+      <div class="section-heading"><div><span>01 / DENEY ALANI</span><h2>Anlam laboratuvarı</h2></div><p>Bir araç seç, örnekleri değiştir ve modelin anlamsal uzayını canlı olarak incele.</p></div>
+      <div class="tool-tabs" role="tablist" aria-label="NLP araçları">
+        <button class="tab active" role="tab" aria-selected="true" data-panel="nearest">Yakın sözcükler</button>
+        <button class="tab" role="tab" aria-selected="false" data-panel="similarity">Benzerlik</button>
+        <button class="tab" role="tab" aria-selected="false" data-panel="analogy">Analoji</button>
+        <button class="tab" role="tab" aria-selected="false" data-panel="sentences">Cümleler</button>
+      </div>
+
+      <div class="workspace">
+        <div class="input-card">
+          <form id="nearest" class="tool-panel active">
+            <label for="nearest-word">Hangi sözcüğü keşfedelim?</label>
+            <div class="input-row"><input id="nearest-word" value="bilim" autocomplete="off"><button type="submit">Keşfet <span>→</span></button></div>
+            <div class="examples">Örnekler: <button type="button">teknoloji</button><button type="button">şehir</button><button type="button">mutlu</button></div>
+          </form>
+          <form id="similarity" class="tool-panel">
+            <label>İki sözcük ne kadar benzer?</label>
+            <div class="double-input"><input name="first" value="kitap" aria-label="Birinci sözcük"><span>↔</span><input name="second" value="bilgi" aria-label="İkinci sözcük"></div>
+            <button class="wide-button" type="submit">Benzerliği ölç <span>→</span></button>
+          </form>
+          <form id="analogy" class="tool-panel">
+            <label>Sözcük aritmetiği</label>
+            <div class="formula"><input name="positive_a" value="kral" aria-label="Pozitif ilk sözcük"><b>+</b><input name="positive_b" value="kadın" aria-label="Pozitif ikinci sözcük"><b>−</b><input name="negative" value="erkek" aria-label="Negatif sözcük"></div>
+            <button class="wide-button" type="submit">Sonucu bul <span>→</span></button>
+          </form>
+          <form id="sentences" class="tool-panel">
+            <label>İki cümlenin anlamını karşılaştır</label>
+            <textarea name="first" rows="3">öğrenci kitap okuyarak bilgi öğrenir</textarea>
+            <textarea name="second" rows="3">okul eğitim ve öğrenme yeridir</textarea>
+            <button class="wide-button" type="submit">Cümleleri karşılaştır <span>→</span></button>
+          </form>
+        </div>
+
+        <div class="result-card" aria-live="polite">
+          <div class="result-head"><span>SONUÇ / COSINE SCORE</span><span class="live-dot">CANLI</span></div>
+          <div id="loading" class="loading hidden">Model düşünüyor<span>.</span><span>.</span><span>.</span></div>
+          <div id="error" class="error hidden"></div>
+          <div id="results" class="results"><div class="empty-orbit"><span>Bir deney<br>başlat</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="nasil">
+      <div class="section-heading"><div><span>02 / YÖNTEM</span><h2>Makine anlamı<br>nasıl öğrenir?</h2></div><p>Word2Vec, bir sözcüğü çevresinde gördüğü diğer sözcüklerden öğrenir. Benzer bağlamlar, vektör uzayında yakın noktalar üretir.</p></div>
+      <div class="steps">
+        <article><span>1</span><div class="step-icon">Aa</div><h3>Metni parçala</h3><p>Türkçe metin küçük harfli sözcük birimlerine ayrılır.</p></article>
+        <article><span>2</span><div class="step-icon nodes">••<br>•••</div><h3>Bağlamı öğren</h3><p>Gensim, birlikte kullanılan sözcüklerin örüntülerini çıkarır.</p></article>
+        <article><span>3</span><div class="step-icon">↗</div><h3>Vektöre dönüştür</h3><p>Her sözcük 80 boyutlu sayısal bir konuma yerleşir.</p></article>
+        <article><span>4</span><div class="step-icon">∠</div><h3>Yakınlığı ölç</h3><p>Kosinüs benzerliği iki anlam yönünün yakınlığını hesaplar.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="brand"><span class="brand-mark">A</span><span>Anlam<br>Atölyesi</span></div><p>Gensim + FastAPI ile açık ve deneysel bir NLP projesi.</p><a href="/docs">API belgeleri ↗</a></footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
+

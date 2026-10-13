@@ -1,0 +1,2 @@
+"""Anlam Atölyesi uygulama paketi."""
+

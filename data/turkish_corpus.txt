@@ -1,0 +1,110 @@
+kral kraliçe saray ülke yönetim taç hükümdar
+erkek kral prens baba oğul kardeş
+kadın kraliçe prenses anne kız kardeş
+kral erkek ise kraliçe kadın olarak anılır
+prens genç erkek kraliyet üyesidir
+prenses genç kadın kraliyet üyesidir
+anne kadın ebeveyn baba erkek ebeveyndir
+oğul erkek çocuk kız kadın çocuktur
+ankara türkiye ülke başkent şehir
+paris fransa ülke başkent şehir
+berlin almanya ülke başkent şehir
+madrid ispanya ülke başkent şehir
+roma italya ülke başkent şehir
+tokyo japonya ülke başkent şehir
+türkiye ankara ile yönetilir fransa paris ile yönetilir
+almanya berlin italya roma ispanya madrid başkent ilişkisi
+istanbul büyük şehir boğaz deniz tarih kültür
+izmir ege deniz sahil şehir
+antalya akdeniz sahil turizm şehir
+trabzon karadeniz yağmur doğa şehir
+kitap okumak bilgi öğrenmek okul eğitim
+öğrenci okul sınıf öğretmen ders öğrenme
+öğretmen öğrenci eğitim ders bilgi anlatmak
+üniversite öğrenci akademisyen araştırma bilim
+bilim araştırma deney veri bilgi keşif
+bilgisayar yazılım kod programlama teknoloji
+yapay zeka makine öğrenmesi veri algoritma
+doğal dil işleme metin sözcük anlam teknoloji
+gensim word2vec sözcük vektör anlam benzerlik
+python yazılım kod veri bilim programlama
+web internet tarayıcı site uygulama teknoloji
+fastapi python web api sunucu uygulama
+flask python web sunucu uygulama
+güneş sıcak parlak gökyüzü gündüz
+ay gece gökyüzü parlak yıldız
+yağmur bulut su hava serin
+kar kış soğuk beyaz hava
+yaz sıcak güneş tatil deniz
+kış soğuk kar yağmur mevsim
+ilkbahar çiçek yeşil doğa mevsim
+sonbahar yaprak sarı rüzgar mevsim
+kedi hayvan evcil sevimli miyav
+köpek hayvan evcil sadık havlama
+kuş hayvan kanat uçmak gökyüzü
+balık hayvan su deniz yüzmek
+aslan hayvan güçlü vahşi orman
+elma meyve kırmızı tatlı ağaç
+muz meyve sarı tatlı tropik
+portakal meyve turuncu sulu vitamin
+domates sebze kırmızı yemek
+salatalık sebze yeşil taze yemek
+doktor hastane sağlık hasta tedavi
+hemşire hastane sağlık hasta bakım
+ilaç sağlık tedavi hastalık iyileşmek
+spor hareket sağlık enerji yaşam
+futbol takım top maç spor
+basketbol takım top sayı spor
+voleybol takım top file spor
+müzik ses ritim melodi sanat
+resim renk çizgi tuval sanat
+roman kitap hikaye yazar edebiyat
+şiir sözcük duygu şair edebiyat
+mutlu sevinç gülmek güzel duygu
+üzgün hüzün ağlamak kötü duygu
+sevgi dostluk güven yakınlık duygu
+öfke kızgınlık gerilim olumsuz duygu
+sabah erken güneş kahvaltı gün
+akşam geç gün batımı yemek
+gece karanlık uyku ay yıldız
+kahve sıcak içecek sabah enerji
+çay sıcak içecek sohbet huzur
+su serin içecek yaşam sağlık
+araba araç yol sürücü ulaşım
+otobüs araç yol yolcu ulaşım
+tren ray istasyon yolcu ulaşım
+uçak hava pilot yolcu ulaşım
+ev oda aile yaşam güven
+okul sınıf öğrenci öğretmen eğitim
+hastane oda doktor hemşire sağlık
+kütüphane kitap okumak sessiz bilgi
+iş çalışma emek üretim para
+tatil dinlenme deniz gezi eğlence
+şehir insan bina sokak yaşam
+köy doğa tarım sessiz yaşam
+orman ağaç yeşil hayvan doğa
+deniz su mavi balık doğa
+dağ yüksek taş kar doğa
+nehir su akış vadi doğa
+iyi güzel olumlu başarılı mutlu
+kötü çirkin olumsuz başarısız üzgün
+hızlı çabuk seri hareket
+yavaş sakin ağır hareket
+büyük geniş yüksek çok
+küçük dar alçak az
+yakın kısa mesafe dost
+uzak uzun mesafe yabancı
+akıllı zeki başarılı öğrenci
+çalışkan emek başarılı öğrenci
+yaratıcı sanat fikir tasarım
+merak araştırma soru öğrenme
+veri analiz model sonuç bilim
+metin cümle sözcük dil anlam
+dil türkçe ingilizce iletişim kültür
+türkçe dil sözcük cümle anlam
+ingilizce dil sözcük cümle anlam
+model eğitim veri algoritma sonuç
+vektör sayı boyut uzay temsil
+benzerlik yakınlık anlam ölçüm
+kosinüs açı vektör benzerlik
+
