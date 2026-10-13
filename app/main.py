@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from app.nlp import analogy, get_model, nearest, sentence_similarity, vocabulary_size, word_similarity
+from app.nlp import analogy, nearest, sentence_similarity, vocabulary_size, word_similarity
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,4 +74,3 @@ def index():
 
 
 app.mount("/assets", StaticFiles(directory=PUBLIC_DIR / "assets"), name="assets")
-

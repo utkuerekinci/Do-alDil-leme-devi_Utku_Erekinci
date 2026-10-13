@@ -1,17 +1,16 @@
-"""Gensim tabanlı, küçük ve açıklanabilir Türkçe Word2Vec servisi."""
+"""Önceden Gensim ile eğitilmiş Türkçe sözcük vektörleri için çıkarım katmanı."""
 
 from __future__ import annotations
 
+import json
+import math
 import re
 from functools import lru_cache
 from pathlib import Path
 
-import numpy as np
-from gensim.models import Word2Vec
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-CORPUS_PATH = BASE_DIR / "data" / "turkish_corpus.txt"
+VECTORS_PATH = BASE_DIR / "data" / "word_vectors.json"
 TOKEN_RE = re.compile(r"[a-zçğıöşü]+", re.IGNORECASE)
 
 
@@ -20,73 +19,72 @@ def tokenize(text: str) -> list[str]:
     return TOKEN_RE.findall(text.lower().replace("İ", "i"))
 
 
-def load_corpus() -> list[list[str]]:
-    lines = CORPUS_PATH.read_text(encoding="utf-8").splitlines()
-    return [tokens for line in lines if (tokens := tokenize(line))]
-
-
 @lru_cache(maxsize=1)
-def get_model() -> Word2Vec:
-    """Modeli süreç başına bir kez, tekrarlanabilir ayarlarla eğitir."""
-    sentences = load_corpus()
-    return Word2Vec(
-        sentences=sentences,
-        vector_size=80,
-        window=5,
-        min_count=1,
-        workers=1,
-        sg=1,
-        negative=10,
-        epochs=220,
-        seed=42,
-    )
+def get_vectors() -> dict[str, list[float]]:
+    """Gensim eğitim betiğinin ürettiği vektörleri süreç başına bir kez yükler."""
+    payload = json.loads(VECTORS_PATH.read_text(encoding="utf-8"))
+    return payload["vectors"]
 
 
 def vocabulary_size() -> int:
-    return len(get_model().wv)
+    return len(get_vectors())
+
+
+def cosine(first: list[float], second: list[float]) -> float:
+    dot = sum(a * b for a, b in zip(first, second))
+    norm_a = math.sqrt(sum(value * value for value in first))
+    norm_b = math.sqrt(sum(value * value for value in second))
+    return dot / (norm_a * norm_b) if norm_a and norm_b else 0.0
 
 
 def nearest(word: str, limit: int = 8) -> list[dict[str, float | str]]:
-    model = get_model().wv
+    vectors = get_vectors()
     token = normalize_word(word)
-    ensure_known(model, token)
-    return [
-        {"word": candidate, "score": round(float(score), 4)}
-        for candidate, score in model.most_similar(token, topn=limit)
-    ]
+    ensure_known(vectors, token)
+    return ranked(vectors[token], vectors, excluded={token}, limit=limit)
 
 
 def word_similarity(first: str, second: str) -> float:
-    model = get_model().wv
+    vectors = get_vectors()
     a, b = normalize_word(first), normalize_word(second)
-    ensure_known(model, a, b)
-    return round(float(model.similarity(a, b)), 4)
+    ensure_known(vectors, a, b)
+    return round(cosine(vectors[a], vectors[b]), 4)
 
 
 def analogy(positive_a: str, positive_b: str, negative: str, limit: int = 6):
-    model = get_model().wv
+    vectors = get_vectors()
     a, b, n = map(normalize_word, (positive_a, positive_b, negative))
-    ensure_known(model, a, b, n)
-    return [
-        {"word": candidate, "score": round(float(score), 4)}
-        for candidate, score in model.most_similar(positive=[a, b], negative=[n], topn=limit)
-    ]
+    ensure_known(vectors, a, b, n)
+    target = [x + y - z for x, y, z in zip(vectors[a], vectors[b], vectors[n])]
+    return ranked(target, vectors, excluded={a, b, n}, limit=limit)
 
 
 def sentence_similarity(first: str, second: str) -> dict[str, object]:
-    model = get_model().wv
-    tokens_a = [token for token in tokenize(first) if token in model]
-    tokens_b = [token for token in tokenize(second) if token in model]
+    vectors = get_vectors()
+    tokens_a = [token for token in tokenize(first) if token in vectors]
+    tokens_b = [token for token in tokenize(second) if token in vectors]
     if not tokens_a or not tokens_b:
         raise ValueError("Her iki cümlede de sözlükte bulunan en az bir sözcük olmalı.")
-    vector_a = np.mean([model[token] for token in tokens_a], axis=0)
-    vector_b = np.mean([model[token] for token in tokens_b], axis=0)
-    denominator = float(np.linalg.norm(vector_a) * np.linalg.norm(vector_b))
-    score = float(np.dot(vector_a, vector_b) / denominator) if denominator else 0.0
+    vector_a = average([vectors[token] for token in tokens_a])
+    vector_b = average([vectors[token] for token in tokens_b])
     return {
-        "score": round(score, 4),
+        "score": round(cosine(vector_a, vector_b), 4),
         "tokens": {"first": tokens_a, "second": tokens_b},
     }
+
+
+def average(items: list[list[float]]) -> list[float]:
+    return [sum(values) / len(items) for values in zip(*items)]
+
+
+def ranked(target: list[float], vectors: dict[str, list[float]], excluded: set[str], limit: int):
+    scores = (
+        (word, cosine(target, vector))
+        for word, vector in vectors.items()
+        if word not in excluded
+    )
+    best = sorted(scores, key=lambda item: item[1], reverse=True)[:limit]
+    return [{"word": word, "score": round(score, 4)} for word, score in best]
 
 
 def normalize_word(value: str) -> str:
@@ -96,13 +94,12 @@ def normalize_word(value: str) -> str:
     return tokens[0]
 
 
-def ensure_known(model, *words: str) -> None:
-    missing = [word for word in words if word not in model]
+def ensure_known(vectors: dict[str, list[float]], *words: str) -> None:
+    missing = [word for word in words if word not in vectors]
     if missing:
         suggestions = sorted(
-            (known for known in model.index_to_key if known.startswith(missing[0][:2])),
+            (known for known in vectors if known.startswith(missing[0][:2])),
             key=len,
         )[:5]
         hint = f" Öneriler: {', '.join(suggestions)}." if suggestions else ""
         raise ValueError(f"Sözlükte bulunamadı: {', '.join(missing)}.{hint}")
-

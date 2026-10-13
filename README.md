@@ -17,7 +17,7 @@ Türkçe sözcükler arasındaki anlamsal ilişkileri **Gensim Word2Vec** ile ke
 Tarayıcı → FastAPI REST API → Gensim Word2Vec → Türkçe eğitim derlemi
 ```
 
-Model ilk istek sırasında `data/turkish_corpus.txt` dosyasından, sabit bir seed ile süreç başına bir kez eğitilir. Bu küçük veri kümesi eğitim/demonstrasyon amaçlıdır; üretim doğruluğu iddiası taşımaz.
+Model `scripts/train_model.py` ile `data/turkish_corpus.txt` dosyasından Gensim Word2Vec kullanılarak eğitilir. Üretilen vektörler, sunucusuz ortamda hızlı açılış için uygulama tarafından salt okunur biçimde yüklenir. Bu küçük veri kümesi eğitim/demonstrasyon amaçlıdır; üretim doğruluğu iddiası taşımaz.
 
 ## Yerelde çalıştırma
 
@@ -28,6 +28,7 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements-dev.txt
+python scripts/train_model.py
 uvicorn app.main:app --reload
 ```
 
@@ -70,4 +71,3 @@ curl "http://127.0.0.1:8000/api/nearest?word=bilim&limit=5"
 ## Lisans
 
 MIT
-
