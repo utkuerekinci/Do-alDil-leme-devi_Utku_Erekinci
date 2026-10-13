@@ -8,7 +8,7 @@ Türkçe sözcükler arasındaki anlamsal ilişkileri **Gensim Word2Vec** ile ke
 - İki sözcük arasındaki kosinüs benzerliğini ölçme
 - Sözcük analojileri (`kral + kadın − erkek`) kurma
 - Cümleleri ortalama sözcük vektörleriyle karşılaştırma
-- Otomatik OpenAPI/Swagger belgeleri (`/docs`)
+- Güvenlik başlıklarıyla korunan statik API belgeleri (`/docs`)
 - Vercel için sıfır yapılandırmaya yakın dağıtım
 
 ## Mimari
