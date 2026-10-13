@@ -25,7 +25,9 @@ def test_health_reports_model():
 
 
 def test_static_api_docs_are_available_without_schema_exposure():
-    assert client.get("/docs").status_code == 200
+    response = client.get("/docs", follow_redirects=False)
+    assert response.status_code == 307
+    assert response.headers["location"] == "/docs.html"
     assert client.get("/openapi.json").status_code == 404
 
 

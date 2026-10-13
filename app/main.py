@@ -5,7 +5,7 @@ from pathlib import Path
 from time import monotonic
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from pydantic import BaseModel, Field
@@ -165,7 +165,7 @@ def index():
 
 @app.get("/docs", include_in_schema=False)
 def api_docs():
-    return FileResponse(PUBLIC_DIR / "docs.html")
+    return RedirectResponse(url="/docs.html", status_code=307)
 
 
 app.mount(
