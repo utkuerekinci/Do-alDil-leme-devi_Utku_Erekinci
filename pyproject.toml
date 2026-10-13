@@ -3,6 +3,13 @@ name = "anlam-atolyesi"
 version = "1.0.0"
 description = "Gensim Word2Vec ile Türkçe anlamsal benzerlik uygulaması"
 requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.118,<1.0",
+  "uvicorn[standard]>=0.35,<1.0",
+  "gensim>=4.3,<5.0",
+  "numpy>=2.0,<3.0",
+  "scipy>=1.13,<2.0",
+]
 
 [tool.vercel]
 entrypoint = "app.main:app"
@@ -10,4 +17,3 @@ entrypoint = "app.main:app"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
-
