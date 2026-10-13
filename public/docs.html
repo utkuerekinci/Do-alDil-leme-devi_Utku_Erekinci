@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Anlam Atölyesi API belgeleri">
+  <title>API Belgeleri — Anlam Atölyesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Anlam Atölyesi ana sayfa"><span class="brand-mark">A</span><span>Anlam<br>Atölyesi</span></a>
+    <nav aria-label="Sayfa bölümleri"><a href="/">Uygulama</a></nav>
+    <div class="status"><span></span> API hazır</div>
+  </header>
+  <main class="how">
+    <div class="section-heading">
+      <div><span>API / V1</span><h1>API belgeleri</h1></div>
+      <p>Tüm uç noktalar JSON döndürür. İstek gövdeleri en fazla 16 KB, istemci hızı dakikada 120 API isteğiyle sınırlıdır.</p>
+    </div>
+    <div class="steps">
+      <article><span>GET</span><h2>/api/health</h2><p>Model durumunu ve sözlük büyüklüğünü döndürür.</p></article>
+      <article><span>GET</span><h2>/api/nearest</h2><p><code>word</code> ve isteğe bağlı <code>limit</code> parametreleriyle en yakın sözcükleri bulur.</p></article>
+      <article><span>POST</span><h2>/api/similarity</h2><p><code>first</code> ve <code>second</code> alanlarındaki iki sözcüğün benzerliğini ölçer.</p></article>
+      <article><span>POST</span><h2>/api/analogy</h2><p><code>positive_a</code>, <code>positive_b</code> ve <code>negative</code> alanlarıyla sözcük analojisi kurar.</p></article>
+      <article><span>POST</span><h2>/api/sentence-similarity</h2><p><code>first</code> ve <code>second</code> alanlarındaki iki cümleyi karşılaştırır.</p></article>
+    </div>
+  </main>
+</body>
+</html>

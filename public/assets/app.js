@@ -58,7 +58,7 @@ async function run(url, options, render) {
 }
 function clearResult() { errorBox.classList.add('hidden'); results.innerHTML = '<div class="empty-orbit"><span>Bir deney<br>başlat</span></div>'; }
 function renderList(items, heading = '') {
-  results.innerHTML = `${heading ? `<p class="score-caption">${escapeHtml(heading)}</p>` : ''}${items.map((item, index) => `<div class="result-item"><span class="rank">0${index + 1}</span><div class="bar-wrap"><span class="bar-label">${escapeHtml(item.word)}</span><span class="bar"><i style="width:${Math.max(2, item.score * 100)}%"></i></span></div><span class="score">${item.score.toFixed(3)}</span></div>`).join('')}`;
+  results.innerHTML = `${heading ? `<p class="score-caption">${escapeHtml(heading)}</p>` : ''}${items.map((item, index) => `<div class="result-item"><span class="rank">0${index + 1}</span><div class="bar-wrap"><span class="bar-label">${escapeHtml(item.word)}</span><progress class="bar" max="1" value="${Math.max(0.02, Math.min(1, item.score))}"></progress></div><span class="score">${item.score.toFixed(3)}</span></div>`).join('')}`;
 }
 function renderScore(score, caption, tokens = []) {
   const percent = Math.round(Math.max(0, score) * 100);
@@ -66,5 +66,4 @@ function renderScore(score, caption, tokens = []) {
 }
 function escapeHtml(value) { const node = document.createElement('span'); node.textContent = value; return node.innerHTML; }
 
-fetch('/api/health').then(response => response.json()).then(data => { document.querySelector('#vocab-count').textContent = data.vocabulary_size; }).catch(() => { document.querySelector('.status').innerHTML = '<span style="background:#ff6b36"></span> Model çevrimdışı'; });
-
+fetch('/api/health').then(response => response.json()).then(data => { document.querySelector('#vocab-count').textContent = data.vocabulary_size; }).catch(() => { const status = document.querySelector('.status'); status.classList.add('offline'); status.innerHTML = '<span></span> Model çevrimdışı'; });
